@@ -1,0 +1,12 @@
+body{
+ background-color:  #a683e3;
+}
+
+input[type="checkbox"]{
+  width: 20px; /*Desired width*/
+  height: 20px; /*Desired height*/
+}
+
+input[type="text"]{
+     border-radius: 10px;
+}
