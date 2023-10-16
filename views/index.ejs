@@ -6,55 +6,81 @@
     <title>Todo app</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body class="">
                 
-    <div class="w-1/5 p-5    space-x-10 flex justify-between text-white text-3xl">
+    <div class="w-1/5 p-5    space-x-10 flex justify-between text-3xl">
         <span class="float-left">
             <img class="w-9/12" src="/images/calendar.png" alt="">
-            <a href="/">Today</a>
+            <a class="" href="/">Today</a>
         </span>
         <span>
-            <a href="/work"> Work </a>
+            <a class="" href="/work"> Work </a>
         </span>
 
     </div>
 
-    <div class=" p-2 bg-white w-3/12 rounded-xl m-auto ">
+    <div class="shadow-xl  p-4 bg-white w-3/12 rounded-lg m-auto text-violet-900 font-bold">
 
-        <% if( locals.date ){ %>
-        <h2 class="text-center text-3xl font-bold">  <%= date %></h2>
-        <%}else{%>
-            <h2  class="text-center text-3xl font-bold" > Work Space </h2>
+        <%if ( locals.date ){ %>
+        <h2 class="text-center text-3xl ">  <%= date %></h2>
+          <%}%>
+         <%if( locals.name ){ %>
+          <h2 class="text-center text-3xl ">  <%= name %></h2>
+        <%}if (locals.work){%>
+            <h2  class="text-center text-3xl" > Work Space </h2>
             <%}%>
     </div>
 
     <div class=" flex justify-center content-center m-5">
-        <div class="rounded-xl bg-white shadow-2xl w-1/2 text-2xl">
+        <div class="rounded-lg bg-white shadow-2xl w-1/2 text-2xl">
             <div class="todo-body">
             <% for (let i =0;i<todo.length;i++) { %>
                 <div class="flex flex-row justify-normal p-5" >
                     <div>
-                        <input width="20px" type="checkbox" >
-                    </div>
+                     <% if( locals.date ){ %>
+                        <form action="/delete" method="post">
+                        <input width="20px" type="checkbox" name="checkbox" value="<%= todo[i]._id %>" onChange="this.form.submit()" >
+                        </form>
+                    <%}if (locals.work){%>
+                       <form action="/deletework" method="post">
+                        <input width="20px" type="checkbox" name="checkbox" value="<%= todo[i]._id %>" onChange="this.form.submit()" >
+                        </form>
+                     <%}%>             
+                    <%if (locals.name){%>
+                       <form action="/deletemany" method="post">
+                        <input width="20px" type="checkbox" name="checkbox" value="<%= todo[i]._id%>" onChange="this.form.submit()" >
+                        <input type="hidden" name="name" value="<%= name %>" >
+                    </form>
+                     <%}%>      
+                      
+                    </div>  
                     <div>
-                        <p class="ml-8"> <%= todo[i] %></p>
+                        <p class="ml-8 text-violet-900"> <%= todo[i].todo %></p>
                     </div>
                     <hr>
                 </div>
                 <%}%>
             </div>
             <% if( locals.date ){ %>
-            <form class="p-10 flex justify-center" action="/" method="post">
-                <input class="w-full border-4 border-black rounder-lg" type="text" id="task" name="task" >
-                <button type="submit"><img class="p-2 w-12"  src="/images/plus.png" alt=""></button>
+            <form class=" p-2 flex justify-center" action="/" method="post">
+                <input class="relative top-6 h-12 w-10/12 border-4 border-black rounder-lg" type="text" id="task" name="task" placeholder="New Task" required  >
+                <button type="submit"><img class=" p-4 w-24"  src="/images/plus.png" alt=""></button>
             </form>
-        <%}else{%>
+        <%} %>
+        <% if( locals.name ){ %>
+            <form class=" p-2 flex justify-center" action="/<%= name %>" method="post">
+                <input class="relative top-6 h-12 w-10/12 border-4 border-black rounder-lg" type="text" id="task" name="task" placeholder="New Task" required  >
+                <button type="submit" value="<%= name %>"><img class=" p-4 w-24"  src="/images/plus.png" alt=""></button>
+            </form>
 
-            <form class="p-10 flex justify-center" action="/work" method="post">
-                <input class="w-full border-4 border-black rounder-lg" type="text" id="task" name="task" >
-                <button type="submit"> <img class="p-2 w-12"  src="/images/plus.png" alt=""></button>
+        <%}if(locals.work){%>
+            <form class="p-5 flex justify-center" action="/work" method="post">
+                <input class="relative top-6 h-12 w-10/12 border-4 border-black rounder-lg" type="text" id="task" name="task" placeholder="New Task" required>
+                <button type="submit" > <img class="p-4 w-24"  src="/images/plus.png" alt=""></button>
             </form>
             <%}%>
         </div>
@@ -63,7 +89,7 @@
 
     
 <footer class=" fixed bottom-0 left-0">
-    <h2 class="text-center p-5 text-xl font-bold">@2023 Griffin's Todo Application</h2>
+    <h2 class="text-center p-5 text-xl ">@2023 Griffin's Todo Application</h2>
 </footer>
 </body>
 

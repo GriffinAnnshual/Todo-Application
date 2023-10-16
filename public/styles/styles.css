@@ -9,4 +9,14 @@ input[type="checkbox"]{
 
 input[type="text"]{
      border-radius: 10px;
+     text-align: center;
+}
+body{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+}
+
+
+input[type=checkbox]:checked + label.strikethrough{
+  text-decoration: line-through;
 }
